@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+
+
+    // environment {
+
+    // }
+    options {
+        timestamps() // Add timestamps to logs
+        timeout(time: 2, unit: 'HOURS') // Timeout after 2 hours
+        buildDiscarder(logRotator(numToKeepStr: '10')) // Keep only the last 10 builds
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install Node.js dependencies
+                    // sh 'npm install'
+                    echo "This is install phase"
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    // Run tests with Jest
+                    // sh 'npm test'
+                    echo "This is testing phase"
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Build step if necessary (e.g., transpiling or bundling)
+                    echo 'Building application...'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy to server or cloud
+                    echo 'Deploying application...'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Application build and test successful!'
+        }
+
+        failure {
+            echo 'Application build or test failed.'
+        }
+    }
+}
